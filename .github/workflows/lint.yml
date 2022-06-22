@@ -1,0 +1,12 @@
+name: CI Workflow
+on: [push, pull_request]
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run linter
+        run: |
+          docker build  -t linter . -f linter/Dockerfile
+          docker run linter functional-community-tank.fsproj
