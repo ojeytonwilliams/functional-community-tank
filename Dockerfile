@@ -3,13 +3,12 @@ WORKDIR /app
 
 COPY . .
 ENV NODE_VERSION=18
-RUN apt-get install -y curl
 ENV NVM_DIR="/app/.nvm"
 RUN mkdir .nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-RUN [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-RUN npm install
-RUN npm run build
+RUN [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
+npm install &&\
+npm run build
 
 # Build runtime image
 FROM node:18
