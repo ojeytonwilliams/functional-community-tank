@@ -6,11 +6,19 @@ open Browser.Dom
 let mutable count = 0
 
 // Get a reference to our button and cast the Element to an HTMLButtonElement
-let myButton = document.querySelector(".my-button") :?> Browser.Types.HTMLButtonElement
+let myButton =
+    document.querySelector (".my-button") :?> Browser.Types.HTMLButtonElement
 
-let buttonText count = if count = 1 then "you clicked: 1 time" else $"you clicked: {count} times"
+let myClicksDiv = document.getElementById ("clicks") :?> Browser.Types.HTMLDivElement
+
+let buttonText count =
+    $"you clicked: {count} time" + if count = 1 then "" else "s"
 
 // Register our listener
-myButton.onclick <- fun _ ->
-    count <- count + 1
-    myButton.innerText <- buttonText count
+myButton.onclick <-
+    fun _ ->
+        count <- count + 1
+        myButton.innerText <- buttonText count
+        let li = document.createElement "li"
+        li.innerText <- $"{count}"
+        myClicksDiv.appendChild li
